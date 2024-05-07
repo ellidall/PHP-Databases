@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AfiiliatesPage{% endblock %}
+
+{% block stylesheets %}
+    <link href="styles/AffiliateListPageStyles.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <span class="title">Филиалы</span>
+        <div class="mainData">
+            <input class="search" type="text" value="" placeholder="Введите название филиала">
+            <div class="affiliateList">
+                <div class="affiliate">
+                    <span class="commonText">1.</span>
+                    <span class="commonText">city / address / employee_count</span>
+                    <div class="buttonContainer">
+                        <button class="btn secondary commonText editBtn">Редактировать</button>
+                        <button class="btn secondary commonText deleteBtn">Удалить</button>
+                    </div>
+                </div>
+            </div>
+            <button class="btn primary">Добавить филиал</button>
+        </div>
+    </div>
+{% endblock %}

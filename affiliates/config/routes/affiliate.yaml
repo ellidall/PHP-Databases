@@ -1,0 +1,4 @@
+affiliates:
+    path: /
+    controller: App\Controller\AffiliateController::getAffiliateListPage
+    methods: GET
