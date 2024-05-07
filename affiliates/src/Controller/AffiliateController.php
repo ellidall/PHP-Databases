@@ -11,4 +11,9 @@ class AffiliateController extends AbstractController
     {
         return $this->render('affiliate/affiliateListPage.html.twig', []);
     }
+
+    public function getAffiliateCardPage(): Response
+    {
+        return $this->render('affiliate/affiliateCardPage.html.twig', []);
+    }
 }

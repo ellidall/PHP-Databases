@@ -1,23 +1,40 @@
 * {
     margin: 0;
     font-family: 'Roboto', 'sans-serif';
+    scrollbar-width: thin;
+    scrollbar-color: #AA96B1 #E5E5E5;
+    scrollbar-gutter: auto;
 }
 
+
 .header {
+    position: relative;
     height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     background: #AA96B1;
+    box-shadow: 0 2px 8px rgba(74, 43, 101, 0.52);
+}
+
+.headerTest {
+    font-size: 30px;
+    font-weight: 700;
+    font-style: italic;
 }
 
 .container {
+    min-height: calc(100vh - 80px);
+    max-height: calc(100vh - 80px);
     overflow-y: auto;
+
 }
 
 .mainContent {
     min-width: 1000px;
     max-width: 1000px;
-    height: calc(100vh - 80px);
     margin: auto;
-    padding: 0 100px;
+    padding: 0 100px 100px;
     box-sizing: border-box;
     background: #E5E5E5;
 }
@@ -45,6 +62,15 @@
 }
 
 .commonText {
-    font-weight: 400;
     font-size: 16px;
+}
+
+.commonInput {
+    width: 100%;
+    height: 36px;
+    padding: 0 20px;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: #FFFFFF;
+    font-size: 13px;
 }

@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}AfiiliatesCard{% endblock %}
+
+{% block stylesheets %}
+    <link href="styles/AffiliateCardPageStyles.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="breadcrumbs">Affiliates > affiliate_card :: (city, address)  </div>
+        <div class="title">Карточка филиала</div>
+        <form class="form" action="" method="get">
+            <div class="fields">
+                <div class="field">
+                    <label class="commonText" for="city">Город: </label>
+                    <input class="commonInput input input_width200" type="text" name="city" id="city" placeholder="Введите город" required/>
+                </div>
+                <div class="field">
+                    <label class="commonText" for="address">Адрес: </label>
+                    <input class="commonInput input input_width400" type="text" name="address" id="address" placeholder="Введите адрес" required/>
+                </div>
+            </div>
+            <div class="commonText marginT21">Количество сотрудников: { employee_count }</div>
+            <input class="btn primary marginT25" type="submit" value="Сохранить"/>
+            <div class="table">
+                <input class="commonInput search" type="text" value="" placeholder="Введите имя сотрудника">
+                <div class="employeeList">
+                    <div class="employee">
+                        <span class="commonText">1.</span>
+                        <span class="commonText">first_name last_name middle_name / job_title</span>
+                        <div class="buttonContainer">
+                            <button class="btn secondary commonText editBtn">Редактировать</button>
+                            <button class="btn secondary commonText deleteBtn">Удалить</button>
+                        </div>
+                    </div>
+                    <div class="employee"></div>
+                    <div class="employee"></div>
+                    <div class="employee"></div>
+                    <div class="employee"></div>
+                    <div class="employee"></div>
+                    <div class="employee"></div>
+                </div>
+                <button class="btn primary">Добавить сотрудника</button>
+            </div>
+        </form>
+    </div>
+{% endblock %}
