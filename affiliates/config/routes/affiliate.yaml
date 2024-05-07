@@ -1,4 +1,9 @@
-affiliates:
+affiliate_list:
     path: /
     controller: App\Controller\AffiliateController::getAffiliateListPage
+    methods: GET
+
+affiliate_card:
+    path: /affiliate #TODO: добавить /{id}
+    controller: App\Controller\AffiliateController::getAffiliateCardPage
     methods: GET

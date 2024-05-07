@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="ru">
     <head>
         <meta charset="UTF-8">
         <title>{% block title %}Welcome!{% endblock %}</title>
@@ -12,7 +12,9 @@
         {% endblock %}
     </head>
     <body>
-        <header class="header"></header>
+        <header class="header">
+            <span class="headerTest">«Дороги и ямы»</span>
+        </header>
         <div class="container">
             <div class="mainContent">
                 {% block body %}{% endblock %}
