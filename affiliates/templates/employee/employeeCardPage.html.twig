@@ -8,7 +8,11 @@
 
 {% block body %}
     <div class="content">
-        <div class="breadcrumbs">Affiliates > affiliate_card :: (city, address) > employee_card :: (first_name last_name middle_name)</div>
+        <div class="breadcrumbs">
+            <a class="link" href="{{ path('affiliate_list') }}">Филиалы</a>
+            <a class="link" href="{{ path('affiliate_card') }}">> {affiliate_card :: (city, address)}</a>
+            <span>> {employee_card :: (first_name last_name middle_name)}</span>
+        </div>
         <div class="title">Карточка сотрудника</div>
         <form class="form" action="" method="get">
             <div class="fieldsContainer">

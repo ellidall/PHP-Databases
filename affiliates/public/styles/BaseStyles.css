@@ -74,3 +74,9 @@
     background: #FFFFFF;
     font-size: 13px;
 }
+
+.link {
+    color: inherit;
+    font: inherit;
+    text-decoration: none;
+}
