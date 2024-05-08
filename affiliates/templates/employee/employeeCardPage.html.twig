@@ -1,0 +1,56 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EmployeeCard{% endblock %}
+
+{% block stylesheets %}
+    <link href="styles/EmployeeCardPageStyles.css" type="text/css" rel="stylesheet" />
+{% endblock %}
+
+{% block body %}
+    <div class="content">
+        <div class="breadcrumbs">Affiliates > affiliate_card :: (city, address) > employee_card :: (first_name last_name middle_name)</div>
+        <div class="title">Карточка сотрудника</div>
+        <form class="form" action="" method="get">
+            <div class="fieldsContainer">
+                <div class="fields">
+                    <div class="field">
+                        <label class="commonText fieldName" for="name">Имя: </label>
+                        <input class="commonInput fieldInput" type="text" name="name" id="name" placeholder="Введите имя" required/>
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="surname">Фамилия: </label>
+                        <input class="commonInput fieldInput" type="text" name="surname" id="surname" placeholder="Введите фамилию" required/>
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="patronymic">Отчество: </label>
+                        <input class="commonInput fieldInput" type="text" name="patronymic" id="patronymic" placeholder="Введите отчество" required/>
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="hireDate">Дата приёма на работу: </label>
+                        <input class="commonInput fieldInput" type="text" name="hireDate" id="hireDate" placeholder="Введите дату приёма на работу" required/>
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="comment">Комментарий администратора: </label>
+                        <textarea class="commonInput fieldTextarea" name="comment" id="comment"></textarea>
+                    </div>
+                </div>
+                <div class="fields">
+                    <div class="field">
+                        <label class="commonText fieldName" for="phone">Телефон: </label>
+                        <input class="commonInput fieldInput" type="text" name="phone" id="phone" placeholder="Введите номер телефона" required/>
+                    </div>
+                    <div class="field">
+                        {#TODO: input -> select#}
+                        <label class="commonText fieldName" for="gender">Пол: </label>
+                        <input class="commonInput fieldInput" type="text" name="gender" id="gender" placeholder="Введите ваш пол"/>
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="birthdate">Дата рождения: </label>
+                        <input class="commonInput fieldInput" type="text" name="birthdate" id="birthdate" placeholder="Введите дату рождения"/>
+                    </div>
+                </div>
+            </div>
+            <input class="btn primary marginT25" type="submit" value="Сохранить"/>
+        </form>
+    </div>
+{% endblock %}

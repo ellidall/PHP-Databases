@@ -33,7 +33,11 @@
     gap: 12px;
 }
 
-.input {
+.fieldName {
+    font-weight: 500;
+}
+
+.fieldInput {
     outline: none;
     border: solid 2px #000000;
 }

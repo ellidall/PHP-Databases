@@ -1,0 +1,64 @@
+.content {
+    min-width: 800px;
+    padding: 50px 0 0 0;
+    box-sizing: border-box;
+}
+
+.breadcrumbs {
+    font-size: 12px;
+    color: #555555;
+}
+
+.title {
+    margin-top: 25px;
+    font-weight: 600;
+    font-size: 24px;
+    color: #000000;
+    user-select: none;
+}
+
+.form {
+    margin-top: 34px;
+}
+
+.fieldsContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.fields {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.fieldName {
+    font-weight: 500;
+}
+
+.fieldInput {
+    min-width: 300px;
+    width: 300px;
+    outline: none;
+    border: solid 2px #000000;
+}
+
+.fieldTextarea {
+    min-width: 480px;
+    max-width: 480px;
+    min-height: 80px;
+    max-height: 180px;
+    padding: 10px 20px;
+    outline: none;
+    border: solid 2px #000000;
+}
+
+.marginT25 {
+    margin-top: 25px;
+}

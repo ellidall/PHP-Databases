@@ -7,3 +7,7 @@ controllers:
 affiliate_routes:
     resource: 'routes/affiliate.yaml'
     type: yaml
+
+employee_routes:
+    resource: 'routes/employee.yaml'
+    type: yaml
