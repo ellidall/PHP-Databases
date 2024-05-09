@@ -3,48 +3,84 @@
 {% block title %}AfiiliatesCard{% endblock %}
 
 {% block stylesheets %}
-    <link href="styles/AffiliateCardPageStyles.css" type="text/css" rel="stylesheet" />
+    <link href="/styles/AffiliateCardPageStyles.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
     <div class="content">
         <div class="breadcrumbs">
-            <a class="link" href="{{ path('affiliate_list') }}">Филиалы</a>
-            <span>> {affiliate_card :: (city, address)}</span>
+            <a class="link" href="{{ path('affiliate_list_page') }}">{{ 'Филиалы' }}</a>
+            <span>{{ '> ' ~ affiliate.city ~ ', ' ~ affiliate.address }}</span>
         </div>
-        <div class="title">Карточка филиала</div>
-        <form class="form" action="" method="get">
+        <div class="title">{{ 'Карточка филиала' }}</div>
+        <form
+            class="form"
+            action="
+                {% if app.request.get('_route') == 'affiliate_card_page' %}{{ path('update_affiliate') }}
+                {% elseif app.request.get('_route') == 'add_affiliate_page' %}{{ path('add_affiliate') }}
+                {% endif %}
+            "
+            method="post"
+            autocomplete="off"
+        >
+            <input type="hidden" name="id" value="{{ app.request.get('id') }}">
+            <input type="hidden" name="employeeCount" value="{{ affiliate is defined ? affiliate.employeeCount : 0}}">
             <div class="fields">
                 <div class="field">
-                    <label class="commonText fieldName" for="city">Город: </label>
-                    <input class="commonInput fieldInput input_width200" type="text" name="city" id="city" placeholder="Введите город" required/>
+                    <label class="commonText fieldName" for="city">{{ 'Город: ' }}</label>
+                    <input
+                        class="commonInput fieldInput input_width200"
+                        type="text"
+                        value="{{ affiliate is defined ? affiliate.city : '' }}"
+                        name="city"
+                        id="city"
+                        placeholder="Введите город"
+                        required
+                    />
                 </div>
                 <div class="field">
-                    <label class="commonText fieldName" for="address">Адрес: </label>
-                    <input class="commonInput fieldInput input_width400" type="text" name="address" id="address" placeholder="Введите адрес" required/>
+                    <label class="commonText fieldName" for="address">{{ 'Адрес: ' }}</label>
+                    <input
+                        class="commonInput fieldInput input_width400"
+                        type="text"
+                        value="{{ affiliate is defined ? affiliate.address : '' }}"
+                        name="address"
+                        id="address"
+                        placeholder="Введите адрес"
+                        required
+                    />
                 </div>
             </div>
-            <div class="commonText fieldName marginT21">Количество сотрудников: { employee_count }</div>
-            <input class="btn primary marginT25" type="submit" value="Сохранить"/>
+            <div class="commonText fieldName marginT21">
+                {{ 'Количество сотрудников:' }} {{ affiliate is defined ? affiliate.employeeCount : 0 }}
+            </div>
+            <input
+                class="btn primary marginT25"
+                type="submit"
+                value={{
+                    app.request.get('_route') == 'affiliate_card_page'
+                        ? 'Сохранить изменения'
+                        : (
+                            app.request.get('_route') == 'add_affiliate_page'
+                                ? 'Создать'
+                                : ''
+                        )
+                }}
+            />
             <div class="table">
                 <input class="commonInput search" type="text" value="" placeholder="Введите имя сотрудника">
                 <div class="employeeList">
                     <div class="employee">
-                        <span class="commonText">1.</span>
-                        <span class="commonText">first_name last_name middle_name / job_title</span>
-                        <div class="buttonContainer">
-                            <button class="btn secondary commonText editBtn">Редактировать</button>
-                            <button class="btn secondary commonText deleteBtn">Удалить</button>
-                        </div>
+                        <span class="commonText">{{ 1 ~ '.' }}&nbsp;</span>
+                        <span class="commonText">{{ 'first_name last_name middle_name / job_title' }}</span>
+                        <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
                     </div>
                     <div class="employee"></div>
                     <div class="employee"></div>
                     <div class="employee"></div>
                     <div class="employee"></div>
-                    <div class="employee"></div>
-                    <div class="employee"></div>
                 </div>
-                <button class="btn primary">Добавить сотрудника</button>
+                <button class="btn primary">{{ 'Добавить сотрудника' }}</button>
             </div>
         </form>
     </div>

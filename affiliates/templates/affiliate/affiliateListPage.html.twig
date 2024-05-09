@@ -3,30 +3,24 @@
 {% block title %}AfiiliatesPage{% endblock %}
 
 {% block stylesheets %}
-    <link href="styles/AffiliateListPageStyles.css" type="text/css" rel="stylesheet" />
+    <link href="/styles/AffiliateListPageStyles.css" type="text/css" rel="stylesheet" />
 {% endblock %}
 
 {% block body %}
     <div class="content">
-        <div class="title">Филиалы</div>
+        <div class="title">{{ 'Филиалы' }}</div>
         <div class="table">
             <input class="commonInput search" type="text" value="" placeholder="Введите название филиала">
             <div class="affiliateList">
-                <div class="affiliate">
-                    <span class="commonText">1.</span>
-                    <span class="commonText">city / address / employee_count</span>
-                    <div class="buttonContainer">
-                        <button class="btn secondary commonText editBtn">Редактировать</button>
-                        <button class="btn secondary commonText deleteBtn">Удалить</button>
+                {% for affiliate in affiliates %}
+                    <div class="affiliate" onclick="location.href = '/affiliate/{{ affiliate.id }}'">
+                        <span class="commonText">{{ loop.index ~ '.' }}&nbsp;</span>
+                        <span class="commonText">{{ affiliate.city ~ ', ' ~ affiliate.address }}</span>
+                        <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
                     </div>
-                </div>
-                <div class="affiliate"></div>
-                <div class="affiliate"></div>
-                <div class="affiliate"></div>
-                <div class="affiliate"></div>
-                <div class="affiliate"></div>
+                {% endfor %}
             </div>
-            <button class="btn primary">Добавить филиал</button>
+            <button class="btn primary" onclick="location.href = '/affiliate/add'">{{ 'Добавить филиал' }}</button>
         </div>
     </div>
 {% endblock %}

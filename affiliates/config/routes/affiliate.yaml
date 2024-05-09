@@ -1,9 +1,26 @@
-affiliate_list:
+affiliate_list_page:
     path: /
     controller: App\Controller\AffiliateController::getAffiliateListPage
     methods: GET
 
-affiliate_card:
-    path: /affiliate #TODO: добавить /{id}
+affiliate_card_page:
+    path: /affiliate/{id}
     controller: App\Controller\AffiliateController::getAffiliateCardPage
     methods: GET
+    requirements:
+        id: '\d+'
+
+add_affiliate_page:
+    path: /affiliate/add
+    controller: App\Controller\AffiliateController::getAddAffiliatePage
+    methods: GET
+
+add_affiliate:
+    path: /affiliate/add
+    controller: App\Controller\AffiliateController::addAffiliate
+    methods: POST
+
+update_affiliate:
+    path: /affiliate/update
+    controller: App\Controller\AffiliateController::updateAffiliate
+    methods: POST

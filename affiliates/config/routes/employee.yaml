@@ -1,5 +1,4 @@
 employee_card:
-    #TODO: добавить /{id}
-    path: /employee
+    path: /employee/{id}
     controller: App\Controller\EmployeeController::getEmployeeCardPage
     methods: GET

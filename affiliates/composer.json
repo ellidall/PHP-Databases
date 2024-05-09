@@ -14,7 +14,8 @@
         "symfony/runtime": "7.0.*",
         "symfony/twig-bundle": "7.0.*",
         "symfony/yaml": "7.0.*",
-        "twig/twig": "^3.9"
+        "twig/twig": "^3.9",
+        "ext-pdo": "*"
     },
     "config": {
         "allow-plugins": {

@@ -40,17 +40,16 @@
     justify-content: space-between;
     border-radius: 4px;
     background: #FFFFFF;
+    cursor: pointer;
 }
 
-.buttonContainer {
-    display: flex;
-    gap: 10px;
-    margin-left: auto;
+.affiliate:hover {
+    background: rgba(170, 150, 177, 0.4);
 }
 
-.editBtn,
 .deleteBtn {
     height: 24px;
+    margin-left: auto;
     font-size: 13px;
 }
 
