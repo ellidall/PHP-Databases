@@ -10,51 +10,148 @@
     <div class="content">
         <div class="breadcrumbs">
             <a class="link" href="{{ path('affiliate_list_page') }}">{{ 'Филиалы' }}</a>
-{#            <a class="link" href="{{ path('affiliate_card_page') }}">{{ '> {affiliate_card :: (city, address)}' }}</a>#}
-            <span>{{ '> {employee_card :: (first_name last_name middle_name)}' }}</span>
+            <a class="link" href="{{ path('affiliate_card_page', {'id': affiliate.id}) }}">
+                {{ ('> ' ~ affiliate.city ~ ', ' ~ affiliate.address) }}
+            </a>
+            <span>{{ employee is defined ? ('> ' ~ employee.firstName ~ ' ' ~ employee.lastName) : '> Новый филиал' }}</span>
         </div>
         <div class="title">{{ 'Карточка сотрудника' }}</div>
-        <form class="form" action="" method="get" autocomplete="off">
+        <form
+            class="form"
+            action="
+                {% if app.request.get('_route') == 'employee_card_page' %}{{ path('update_employee') }}
+                {% elseif app.request.get('_route') == 'add_employee_page' %}{{ path('add_employee') }}
+                {% endif %}
+            "
+            method="post"
+            autocomplete="off"
+        >
+            <input type="hidden" name="affiliateId" value="{{ affiliate.id }}">
+            <input type="hidden" name="id" value="{{ employee is defined ? employee.id : 0}}">
             <div class="fieldsContainer">
                 <div class="fields">
                     <div class="field">
                         <label class="commonText fieldName" for="name">{{ 'Имя: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="name" id="name" placeholder="Введите имя" required/>
+                        <input
+                            class="commonInput fieldInput"
+                            type="text"
+                            value="{{ employee is defined ? employee.firstName : '' }}"
+                            name="firstName"
+                            id="name"
+                            placeholder="Введите имя"
+                            required
+                        />
                     </div>
                     <div class="field">
-                        <label class="commonText fieldName" for="surname">{{ 'Фамилия: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="surname" id="surname" placeholder="Введите фамилию" required/>
+                        <label class="commonText fieldName" for="lastName">{{ 'Фамилия: ' }}</label>
+                        <input
+                            class="commonInput fieldInput"
+                            type="text"
+                            value="{{ employee is defined ? employee.lastName : '' }}"
+                            name="lastName"
+                            id="lastName"
+                            placeholder="Введите фамилию"
+                            required
+                        />
                     </div>
                     <div class="field">
-                        <label class="commonText fieldName" for="patronymic">{{ 'Отчество: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="patronymic" id="patronymic" placeholder="Введите отчество" required/>
+                        <label class="commonText fieldName" for="middleName">{{ 'Отчество: ' }}</label>
+                        <input
+                            class="commonInput fieldInput"
+                            type="text"
+                            value="{{ employee is defined ? employee.middleName : '' }}"
+                            name="middleName"
+                            id="middleName"
+                            placeholder="Введите отчество"
+                        />
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="email">{{ 'Email: ' }}</label>
+                        <input
+                            class="commonInput fieldInput"
+                            type="text"
+                            value="{{ employee is defined ? employee.email : '' }}"
+                            name="email"
+                            id="email"
+                            placeholder="Введите email"
+                            required
+                        />
+                    </div>
+                    <div class="field">
+                        <label class="commonText fieldName" for="jobTitle">{{ 'Должность: ' }}</label>
+                        <input
+                            class="commonInput fieldInput"
+                            type="text"
+                            value="{{ employee is defined ? employee.jobTitle : '' }}"
+                            name="jobTitle"
+                            id="jobTitle"
+                            placeholder="Введите должность"
+                            required
+                        />
                     </div>
                     <div class="field">
                         <label class="commonText fieldName" for="hireDate">{{ 'Дата приёма на работу: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="hireDate" id="hireDate" placeholder="Введите дату приёма на работу" required/>
+                        <input
+                            class="commonInput fieldInput"
+                            type="date"
+                            value="{{ employee is defined ? employee.hireDate|date('Y-m-d') : '' }}"
+                            name="hireDate"
+                            id="hireDate"
+                            placeholder="Введите дату приёма на работу"
+                            required
+                        />
                     </div>
                     <div class="field">
                         <label class="commonText fieldName" for="comment">{{ 'Комментарий администратора: ' }}</label>
-                        <textarea class="commonInput fieldTextarea" name="comment" id="comment"></textarea>
+                        <textarea class="commonInput fieldTextarea" name="comment" id="comment">{{ employee is defined ? employee.administratorComment : '' }}</textarea>
                     </div>
                 </div>
                 <div class="fields">
                     <div class="field">
                         <label class="commonText fieldName" for="phone">{{ 'Телефон: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="phone" id="phone" placeholder="Введите номер телефона" required/>
+                        <input
+                            class="commonInput fieldInput"
+                            type="text"
+                            value="{{ employee is defined ? employee.phone : '' }}"
+                            name="phone"
+                            id="phone"
+                            placeholder="Введите номер телефона"
+                        />
                     </div>
                     <div class="field">
-                        {#TODO: input -> select#}
                         <label class="commonText fieldName" for="gender">{{ 'Пол: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="gender" id="gender" placeholder="Введите ваш пол"/>
+                        <select class="commonInput fieldInput" name="gender" id="gender">
+                            <option value="{{ genderNotStated }}"{# {% if employee is defined and employee.gender == genderNotStated %}selected{% endif %}#}>Не указано</option>
+                            <option value="{{ genderMale }}" {#{% if employee is defined and employee.gender == genderMale %}selected{% endif %}#}>Мужской</option>
+                            <option value="{{ genderFemale }}" {#{% if employee is defined and employee.gender == genderFemale %}selected{% endif %}#}>Женский</option>
+                        </select>
                     </div>
                     <div class="field">
-                        <label class="commonText fieldName" for="birthdate">{{ 'Дата рождения: ' }}</label>
-                        <input class="commonInput fieldInput" type="text" name="birthdate" id="birthdate" placeholder="Введите дату рождения"/>
+                        <label class="commonText fieldName" for="birthDate">{{ 'Дата рождения: ' }}</label>
+                        <input
+                            class="commonInput fieldInput"
+                            type="date"
+                            value="{{ employee is defined ? employee.birthDate|date('Y-m-d') : '' }}"
+                            name="birthDate"
+                            id="birthDate"
+                            placeholder="Введите дату рождения"
+                        />
                     </div>
                 </div>
             </div>
-            <input class="btn primary marginT25" type="submit" value="Сохранить"/>
+            <input
+                class="btn primary marginT25"
+                type="submit"
+                value={{
+                    app.request.get('_route') == 'employee_card_page'
+                        ? 'Сохранить изменения'
+                        : (
+                            app.request.get('_route') == 'add_employee_page'
+                            ? 'Создать'
+                            : ''
+                        )
+                }}
+            />
         </form>
     </div>
 {% endblock %}

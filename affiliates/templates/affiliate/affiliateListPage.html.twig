@@ -10,17 +10,19 @@
     <div class="content">
         <div class="title">{{ 'Филиалы' }}</div>
         <div class="table">
-            <input class="commonInput search" type="text" value="" placeholder="Введите название филиала">
+            {#<input class="commonInput search" type="text" value="" placeholder="Введите название филиала">#}
             <div class="affiliateList">
-                {% for affiliate in affiliates %}
-                    <div class="affiliate" onclick="location.href = '/affiliate/{{ affiliate.id }}'">
-                        <span class="commonText">{{ loop.index ~ '.' }}&nbsp;</span>
-                        <span class="commonText">{{ affiliate.city ~ ', ' ~ affiliate.address }}</span>
-                        <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
-                    </div>
-                {% endfor %}
+                {% if affiliates is defined %}
+                    {% for affiliate in affiliates %}
+                        <div class="affiliate" onclick="location.href = '/affiliate/{{ affiliate.id }}'">
+                            <span class="commonText">{{ loop.index ~ '.' }}&nbsp;</span>
+                            <span class="commonText">{{ affiliate.city ~ ', ' ~ affiliate.address }}</span>
+                            <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
+                        </div>
+                    {% endfor %}
+                {% endif %}
             </div>
-            <button class="btn primary" onclick="location.href = '/affiliate/add'">{{ 'Добавить филиал' }}</button>
+            <button class="btn primary" onclick="location.href='{{ path('add_affiliate_page')}}'">{{ 'Добавить филиал' }}</button>
         </div>
     </div>
 {% endblock %}

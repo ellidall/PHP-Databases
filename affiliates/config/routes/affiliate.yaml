@@ -10,6 +10,11 @@ affiliate_card_page:
     requirements:
         id: '\d+'
 
+update_affiliate:
+    path: /affiliate/update
+    controller: App\Controller\AffiliateController::updateAffiliate
+    methods: POST
+
 add_affiliate_page:
     path: /affiliate/add
     controller: App\Controller\AffiliateController::getAddAffiliatePage
@@ -18,9 +23,4 @@ add_affiliate_page:
 add_affiliate:
     path: /affiliate/add
     controller: App\Controller\AffiliateController::addAffiliate
-    methods: POST
-
-update_affiliate:
-    path: /affiliate/update
-    controller: App\Controller\AffiliateController::updateAffiliate
     methods: POST

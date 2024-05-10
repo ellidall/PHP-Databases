@@ -15,6 +15,7 @@
     justify-content: center;
     background: #AA96B1;
     box-shadow: 0 2px 8px rgba(74, 43, 101, 0.52);
+    user-select: none;
 }
 
 .headerTest {
@@ -33,6 +34,7 @@
 .mainContent {
     min-width: 1000px;
     max-width: 1000px;
+    min-height: calc(100vh - 80px);
     margin: auto;
     padding: 0 100px 100px;
     box-sizing: border-box;
@@ -79,4 +81,8 @@
     color: inherit;
     font: inherit;
     text-decoration: none;
+}
+
+.link:hover {
+    color: rgba(170, 150, 177, 1);
 }

@@ -5,7 +5,7 @@ namespace App\Common;
 
 enum GenderEnum: int
 {
-    const NOT_STATED = 0;
-    const MALE = 1;
-    const FEMALE = 2;
+    case NOT_STATED = 0;
+    case MALE = 1;
+    case FEMALE = 2;
 }

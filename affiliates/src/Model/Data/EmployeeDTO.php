@@ -1,12 +1,12 @@
 <?php
-declare(strict_types = 1);
+declare(strict_types=1);
 
-namespace App\Model;
+namespace App\Model\Data;
 
 use App\Common\GenderEnum;
 use DateTimeImmutable;
-
-class Employee
+//TODO: не использовать в названии DTO
+class EmployeeDTO
 {
     private int $id;
     private int $affiliateId;
@@ -20,7 +20,7 @@ class Employee
     private ?DateTimeImmutable $birthDate;
     private DateTimeImmutable $hireDate;
     private ?string $administratorComment;
-//TODO: переделать модель
+
     public function __construct(
         int $id,
         int $affiliateId,

@@ -12,6 +12,7 @@ class AffiliateRepository
 {
     private ConnectionProvider $connection;
 
+    //TODO: Нужно оно соединение на скрипт, убрать из конструктора
     public function __construct()
     {
         $this->connection = new ConnectionProvider(
@@ -24,7 +25,11 @@ class AffiliateRepository
     public function findById(int $id): ?Affiliate
     {
         $query = <<<SQL
-            SELECT *
+            SELECT 
+                id,
+                city,
+                address,
+                employee_count
             FROM affiliate
             WHERE id = :id
             SQL;
@@ -93,9 +98,13 @@ class AffiliateRepository
     public function listAll(): array
     {
         $query = <<<SQL
-            SELECT *
+            SELECT 
+                id,
+                city,
+                address,
+                employee_count
             FROM affiliate
-            ORDER BY id DESC
+            ORDER BY id
             SQL;
 
         $statement = $this->connection->execute($query);

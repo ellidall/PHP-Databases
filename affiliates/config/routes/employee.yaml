@@ -1,4 +1,23 @@
-employee_card:
+employee_card_page:
     path: /employee/{id}
     controller: App\Controller\EmployeeController::getEmployeeCardPage
     methods: GET
+    requirements:
+        id: '\d+'
+
+update_employee:
+    path: /employee/update
+    controller: App\Controller\EmployeeController::updateEmployee
+    methods: POST
+
+add_employee_page:
+    path: /affiliate/{affiliateId}/employee/add
+    controller: App\Controller\EmployeeController::getAddEmployeePage
+    methods: GET
+    requirements:
+        id: '\d+'
+
+add_employee:
+    path: /employee/add
+    controller: App\Controller\EmployeeController::addEmployee
+    methods: POST

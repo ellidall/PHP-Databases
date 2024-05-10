@@ -10,7 +10,7 @@
     <div class="content">
         <div class="breadcrumbs">
             <a class="link" href="{{ path('affiliate_list_page') }}">{{ 'Филиалы' }}</a>
-            <span>{{ '> ' ~ affiliate.city ~ ', ' ~ affiliate.address }}</span>
+            <span>{{ affiliate is defined ? ('> ' ~ affiliate.city ~ ', ' ~ affiliate.address) : '> Новый филиал' }}</span>
         </div>
         <div class="title">{{ 'Карточка филиала' }}</div>
         <form
@@ -24,7 +24,7 @@
             autocomplete="off"
         >
             <input type="hidden" name="id" value="{{ app.request.get('id') }}">
-            <input type="hidden" name="employeeCount" value="{{ affiliate is defined ? affiliate.employeeCount : 0}}">
+            <input type="hidden" name="employeeCount" value="{{ affiliate is defined ? affiliate.employeeCount : 0 }}">
             <div class="fields">
                 <div class="field">
                     <label class="commonText fieldName" for="city">{{ 'Город: ' }}</label>
@@ -67,21 +67,23 @@
                         )
                 }}
             />
-            <div class="table">
-                <input class="commonInput search" type="text" value="" placeholder="Введите имя сотрудника">
-                <div class="employeeList">
-                    <div class="employee">
-                        <span class="commonText">{{ 1 ~ '.' }}&nbsp;</span>
-                        <span class="commonText">{{ 'first_name last_name middle_name / job_title' }}</span>
-                        <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
-                    </div>
-                    <div class="employee"></div>
-                    <div class="employee"></div>
-                    <div class="employee"></div>
-                    <div class="employee"></div>
-                </div>
-                <button class="btn primary">{{ 'Добавить сотрудника' }}</button>
-            </div>
         </form>
+        {% if app.request.get('_route') != 'add_affiliate_page' %}
+            <div class="table">
+                {#<input class="commonInput search" type="text" value="" placeholder="Введите имя сотрудника">#}
+                <div class="employeeList">
+                    {% if employees is defined %}
+                        {% for employee in employees %}
+                            <div class="employee" onclick="location.href = '/employee/{{ employee.id }}'">
+                                <span class="commonText">{{ loop.index ~ '.' }}&nbsp;</span>
+                                <span class="commonText">{{ employee.firstName ~ ' ' ~ employee.lastName ~ ' (' ~ employee.jobTitle ~ ')' }}</span>
+                                <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                </div>
+                <button class="btn primary" onclick="location.href='{{ path('add_employee_page', {'affiliateId': affiliate.id}) }}'">{{ 'Добавить сотрудника' }}</button>
+            </div>
+        {% endif %}
     </div>
 {% endblock %}
