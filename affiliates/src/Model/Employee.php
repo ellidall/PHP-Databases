@@ -8,7 +8,7 @@ use DateTimeImmutable;
 
 class Employee
 {
-    private int $id;
+    private ?int $id;
     private int $affiliateId;
     private string $firstName;
     private string $lastName;
@@ -17,12 +17,14 @@ class Employee
     private string $email;
     private string $jobTitle;
     private GenderEnum $gender;
-    private ?DateTimeImmutable $birthDate;
+    private DateTimeImmutable $birthDate;
     private DateTimeImmutable $hireDate;
     private ?string $administratorComment;
-//TODO: переделать модель
+
+    private ?string $avatar;
+
     public function __construct(
-        int $id,
+        ?int $id,
         int $affiliateId,
         string $firstName,
         string $lastName,
@@ -31,9 +33,10 @@ class Employee
         string $email,
         string $jobTitle,
         GenderEnum $gender,
-        ?DateTimeImmutable $birthDate,
+        DateTimeImmutable $birthDate,
         DateTimeImmutable $hireDate,
         ?string $administratorComment,
+        ?string $avatar,
     )
     {
         $this->id = $id;
@@ -48,9 +51,10 @@ class Employee
         $this->birthDate = $birthDate;
         $this->hireDate = $hireDate;
         $this->administratorComment = $administratorComment;
+        $this->avatar = $avatar;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -95,7 +99,7 @@ class Employee
         return $this->gender;
     }
 
-    public function getBirthDate(): ?DateTimeImmutable
+    public function getBirthDate(): DateTimeImmutable
     {
         return $this->birthDate;
     }
@@ -108,5 +112,15 @@ class Employee
     public function getAdministratorComment(): ?string
     {
         return $this->administratorComment;
+    }
+
+    public function getAvatar(): ?string
+    {
+        return $this->avatar;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 }

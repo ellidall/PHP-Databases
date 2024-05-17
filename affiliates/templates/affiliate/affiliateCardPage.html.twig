@@ -77,12 +77,21 @@
                             <div class="employee" onclick="location.href = '/employee/{{ employee.id }}'">
                                 <span class="commonText">{{ loop.index ~ '.' }}&nbsp;</span>
                                 <span class="commonText">{{ employee.firstName ~ ' ' ~ employee.lastName ~ ' (' ~ employee.jobTitle ~ ')' }}</span>
-                                <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
+                                <form
+                                    class="formForDelete"
+                                    action="{{ path('delete_employee') }}"
+                                    method="post"
+                                >
+                                    <input class="hidden" type="text" name="id" value="{{ employee.id }}">
+                                    <input class="hidden" type="text" name="affiliateId" value="{{ affiliate is defined ? affiliate.id : 0 }}">
+                                    <input class="btn secondary commonText deleteBtn" type="submit" value="Удалить">
+                                </form>
+                                {#<button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>#}
                             </div>
                         {% endfor %}
                     {% endif %}
                 </div>
-                <button class="btn primary" onclick="location.href='{{ path('add_employee_page', {'affiliateId': affiliate.id}) }}'">{{ 'Добавить сотрудника' }}</button>
+                <button class="btn primary" onclick="location.href='/affiliate/{{ affiliate is defined ? affiliate.id : 1 }}/employee/add'">{{ 'Добавить сотрудника' }}</button>
             </div>
         {% endif %}
     </div>

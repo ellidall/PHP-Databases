@@ -5,13 +5,13 @@ namespace App\Model;
 
 class Affiliate
 {
-    private int $id;
+    private ?int $id;
     private string $city;
     private string $address;
     private int $employeeCount;
 
     public function __construct(
-        int $id,
+        ?int $id,
         string $city,
         string $address,
         int $employeeCount,
@@ -23,7 +23,7 @@ class Affiliate
         $this->employeeCount = $employeeCount;
     }
 
-    public function getId(): int
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -41,5 +41,10 @@ class Affiliate
     public function getEmployeeCount(): int
     {
         return $this->employeeCount;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
     }
 }

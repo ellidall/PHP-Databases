@@ -47,9 +47,16 @@
     background: rgba(170, 150, 177, 0.4);
 }
 
+.form {
+    margin-left: auto;
+}
+
+.hidden {
+    display: none;
+}
+
 .deleteBtn {
     height: 24px;
-    margin-left: auto;
     font-size: 13px;
 }
 

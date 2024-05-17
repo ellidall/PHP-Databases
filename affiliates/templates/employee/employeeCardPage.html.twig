@@ -25,6 +25,7 @@
             "
             method="post"
             autocomplete="off"
+            enctype="multipart/form-data"
         >
             <input type="hidden" name="affiliateId" value="{{ affiliate.id }}">
             <input type="hidden" name="id" value="{{ employee is defined ? employee.id : 0}}">
@@ -138,6 +139,11 @@
                         />
                     </div>
                 </div>
+            </div>
+            <div class="field marginT16">
+                <label class="commonText fieldName" for="avatar">{{ 'Аватар: ' }}</label>
+                <input class="" type="file" id="avatar" name="avatar" accept="image/jpeg, image/webp">
+                <img src="{{ asset(employee.avatar ? '/uploads/' ~ employee.avatar : '/default.jpeg') }}" alt="image">
             </div>
             <input
                 class="btn primary marginT25"

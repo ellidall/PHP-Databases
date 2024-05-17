@@ -21,3 +21,8 @@ add_employee:
     path: /employee/add
     controller: App\Controller\EmployeeController::addEmployee
     methods: POST
+
+delete_employee:
+    path: /employee/delete
+    controller: App\Controller\EmployeeController::deleteEmployee
+    methods: POST

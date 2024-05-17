@@ -17,7 +17,15 @@
                         <div class="affiliate" onclick="location.href = '/affiliate/{{ affiliate.id }}'">
                             <span class="commonText">{{ loop.index ~ '.' }}&nbsp;</span>
                             <span class="commonText">{{ affiliate.city ~ ', ' ~ affiliate.address }}</span>
-                            <button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>
+                            <form
+                                class="form"
+                                action="{{ path('delete_affiliate') }}"
+                                method="post"
+                            >
+                                <input class="hidden" type="text" name="id" value="{{ affiliate.id }}">
+                                <input class="btn secondary commonText deleteBtn" type="submit" value="Удалить">
+                            </form>
+                            {#<button class="btn secondary commonText deleteBtn">{{ 'Удалить' }}</button>#}
                         </div>
                     {% endfor %}
                 {% endif %}

@@ -1,25 +1,19 @@
 <?php
 declare(strict_types = 1);
 
-namespace App\Repository;
+namespace App\Database;
 
-use App\Database\ConnectionProvider;
+use App\Common\Connection;
 use App\Model\Affiliate;
-use App\Model\Data\AffiliateDTO;
 use PDO;
 
-class AffiliateRepository
+class AffiliateTable
 {
-    private ConnectionProvider $connection;
+    private Connection $connection;
 
-    //TODO: Нужно оно соединение на скрипт, убрать из конструктора
-    public function __construct()
+    public function __construct(Connection $connection)
     {
-        $this->connection = new ConnectionProvider(
-            $_ENV['DB_DSN'],
-            $_ENV['DB_NAME'],
-            $_ENV['DB_PASSWORD'],
-        );
+        $this->connection = $connection;
     }
 
     public function findById(int $id): ?Affiliate
@@ -49,15 +43,7 @@ class AffiliateRepository
             : null;
     }
 
-    /**
-     * @param array{
-     *     city:string,
-     *     address:string,
-     *     employee_count:int
-     * } $affiliateData
-     * @return int
-     */
-    public function store(array $affiliateData): int
+    public function create(Affiliate $affiliate): int
     {
         $query = <<<SQL
             INSERT INTO affiliate (city, address, employee_count)
@@ -65,15 +51,15 @@ class AffiliateRepository
             SQL;
 
         $this->connection->execute($query, [
-            'city' => $affiliateData['city'],
-            'address' => $affiliateData['address'],
-            'employee_count' => $affiliateData['employee_count'],
+            'city' => $affiliate->getCity(),
+            'address' => $affiliate->getAddress(),
+            'employee_count' => $affiliate->getEmployeeCount(),
         ]);
 
         return $this->connection->getLastInsertId();
     }
 
-    public function update(AffiliateDTO $affiliateData): void
+    public function update(Affiliate $affiliate): void
     {
         $query = <<<SQL
             UPDATE affiliate
@@ -85,10 +71,23 @@ class AffiliateRepository
             SQL;
 
         $this->connection->execute($query, [
-            'id' => $affiliateData->getId(),
-            'city' => $affiliateData->getCity(),
-            'address' => $affiliateData->getAddress(),
-            'employee_count' => $affiliateData->getEmployeeCount(),
+            'id' => $affiliate->getId(),
+            'city' => $affiliate->getCity(),
+            'address' => $affiliate->getAddress(),
+            'employee_count' => $affiliate->getEmployeeCount(),
+        ]);
+    }
+
+    public function delete(Affiliate $affiliate): void
+    {
+        $query = <<<SQL
+            DELETE FROM affiliate 
+            WHERE id = :id
+            SQL;
+
+        $id = $affiliate->getId();
+            $this->connection->execute($query, [
+            'id' => $affiliate->getId(),
         ]);
     }
 

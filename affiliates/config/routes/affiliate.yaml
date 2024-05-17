@@ -24,3 +24,8 @@ add_affiliate:
     path: /affiliate/add
     controller: App\Controller\AffiliateController::addAffiliate
     methods: POST
+
+delete_affiliate:
+    path: /affiliate/delete
+    controller: App\Controller\AffiliateController::deleteAffiliate
+    methods: POST
