@@ -16,6 +16,7 @@ class ImageService
         'image/webp' => '.webp',
     ];
 
+    //TODO: изучить нюансы UploadedFile
     public function moveImageToUploadsAndGetPath(UploadedFile $file): ?string
     {
         $name = $file->getClientOriginalName();

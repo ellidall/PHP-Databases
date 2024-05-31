@@ -14,7 +14,7 @@ class Affiliate
         ?int $id,
         string $city,
         string $address,
-        int $employeeCount,
+        int $employeeCount = 0,
     )
     {
         $this->id = $id;
@@ -46,5 +46,20 @@ class Affiliate
     public function setId(int $id): void
     {
         $this->id = $id;
+    }
+
+    public function setCity(string $city): void
+    {
+        $this->city = $city;
+    }
+
+    public function setAddress(string $address): void
+    {
+        $this->address = $address;
+    }
+
+    public function setEmployeeCount(int $employeeCount): void
+    {
+        $this->employeeCount = $employeeCount;
     }
 }

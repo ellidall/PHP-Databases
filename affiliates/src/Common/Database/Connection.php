@@ -1,11 +1,11 @@
 <?php
 declare(strict_types=1);
 
-namespace App\Common;
+namespace App\Common\Database;
 
 use PDO;
 use PDOStatement;
-use Symfony\Component\DependencyInjection\Exception\RuntimeException;
+use RuntimeException;
 
 final class Connection
 {
@@ -14,6 +14,7 @@ final class Connection
     private string $password;
 
     private ?PDO $handle = null;
+    private int $transactionLevel = 0;
 
     public function __construct(string $dsn, string $user, string $password)
     {
@@ -41,17 +42,39 @@ final class Connection
 
     public function beginTransaction(): void
     {
-        $this->getConnection()->beginTransaction();
+        if ($this->transactionLevel === 0)
+        {
+            $this->getConnection()->beginTransaction();
+        }
+        ++$this->transactionLevel;
     }
 
     public function commit(): void
     {
-        $this->getConnection()->commit();
+        if ($this->transactionLevel <= 0)
+        {
+            throw new \RuntimeException('Cannot call ' . __METHOD__ . ': there is no open transaction');
+        }
+
+        --$this->transactionLevel;
+        if ($this->transactionLevel === 0)
+        {
+            $this->getConnection()->commit();
+        }
     }
 
     public function rollback(): void
     {
-        $this->getConnection()->rollBack();
+        if ($this->transactionLevel <= 0)
+        {
+            throw new \RuntimeException('Cannot call ' . __METHOD__ . ': there is no open transaction');
+        }
+
+        --$this->transactionLevel;
+        if ($this->transactionLevel === 0)
+        {
+            $this->getConnection()->rollBack();
+        }
     }
 
     private function getConnection(): PDO

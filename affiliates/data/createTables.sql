@@ -1,4 +1,4 @@
-use affiliates;
+USE affiliates;
 
 CREATE TABLE affiliate (
     id INT UNSIGNED AUTO_INCREMENT PRIMARY KEY,
@@ -24,10 +24,12 @@ CREATE TABLE employee (
     FOREIGN KEY (affiliate_id) REFERENCES affiliate(id)
 );
 
+CREATE DATABASE affiliates_tests;
+USE affiliates_tests;
 SHOW DATABASES;
 SHOW TABLES FROM affiliates;
+SHOW TABLES FROM affiliates_tests;
 SELECT * FROM affiliate;
 SELECT * FROM employee;
 DROP TABLE affiliate;
 DROP TABLE employee;
-

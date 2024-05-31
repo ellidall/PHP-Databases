@@ -20,7 +20,6 @@ class Employee
     private DateTimeImmutable $birthDate;
     private DateTimeImmutable $hireDate;
     private ?string $administratorComment;
-
     private ?string $avatar;
 
     public function __construct(

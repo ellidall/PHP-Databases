@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Database;
 
-use App\Common\Connection;
+use App\Common\Database\Connection;
 use App\Model\Affiliate;
 use PDO;
 
@@ -42,8 +42,8 @@ class AffiliateTable
             )
             : null;
     }
-
-    public function create(Affiliate $affiliate): int
+    
+    public function insert(Affiliate $affiliate): int
     {
         $query = <<<SQL
             INSERT INTO affiliate (city, address, employee_count)

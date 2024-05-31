@@ -3,7 +3,7 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
-use App\Common\ConnectionProvider;
+use App\Common\Database\ConnectionProvider;
 use App\Common\GenderEnum;
 use App\Database\AffiliateTable;
 use App\Database\EmployeeTable;
@@ -67,6 +67,7 @@ class EmployeeController extends AbstractController
                 'genderMale' => GenderEnum::MALE->value,
                 'genderFemale' => GenderEnum::FEMALE->value,
             ]);
+
         }
         catch (Exception $e)
         {
@@ -106,7 +107,7 @@ class EmployeeController extends AbstractController
                 avatar: $imagePath,
             );
 
-            $newEmployeeId = $this->employeeRepository->create($employee);
+            $newEmployeeId = $this->employeeRepository->insert($employee);
             $employee->setId($newEmployeeId);
 
             return $this->redirectToRoute('employee_card_page', ['id' => $newEmployeeId]);

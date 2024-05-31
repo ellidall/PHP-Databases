@@ -3,7 +3,7 @@ declare(strict_types=1);
 
 namespace App\Database;
 
-use App\Common\Connection;
+use App\Common\Database\Connection;
 use App\Common\GenderEnum;
 use App\Model\Employee;
 use DateTimeImmutable;
@@ -124,7 +124,7 @@ class EmployeeTable
         return $employees;
     }
 
-    public function create(Employee $employee): int
+    public function insert(Employee $employee): int
     {
         $query = <<<SQL
             INSERT INTO employee (

@@ -13,7 +13,7 @@
             <a class="link" href="{{ path('affiliate_card_page', {'id': affiliate.id}) }}">
                 {{ ('> ' ~ affiliate.city ~ ', ' ~ affiliate.address) }}
             </a>
-            <span>{{ employee is defined ? ('> ' ~ employee.firstName ~ ' ' ~ employee.lastName) : '> Новый филиал' }}</span>
+            <span>{{ employee is defined ? ('> ' ~ employee.firstName ~ ' ' ~ employee.lastName) : '> Новый сотрудник' }}</span>
         </div>
         <div class="title">{{ 'Карточка сотрудника' }}</div>
         <form
@@ -122,9 +122,9 @@
                     <div class="field">
                         <label class="commonText fieldName" for="gender">{{ 'Пол: ' }}</label>
                         <select class="commonInput fieldInput" name="gender" id="gender">
-                            <option value="{{ genderNotStated }}"{# {% if employee is defined and employee.gender == genderNotStated %}selected{% endif %}#}>Не указано</option>
-                            <option value="{{ genderMale }}" {#{% if employee is defined and employee.gender == genderMale %}selected{% endif %}#}>Мужской</option>
-                            <option value="{{ genderFemale }}" {#{% if employee is defined and employee.gender == genderFemale %}selected{% endif %}#}>Женский</option>
+                            <option value="{{ genderNotStated }}" {% if employee is defined and employee.gender == genderNotStated %}selected{% endif %}>Не указано</option>
+                            <option value="{{ genderMale }}" {% if employee is defined and employee.gender == genderMale %}selected{% endif %}>Мужской</option>
+                            <option value="{{ genderFemale }}" {% if employee is defined and employee.gender == genderFemale %}selected{% endif %}>Женский</option>
                         </select>
                     </div>
                     <div class="field">
@@ -143,7 +143,8 @@
             <div class="field marginT16">
                 <label class="commonText fieldName" for="avatar">{{ 'Аватар: ' }}</label>
                 <input class="" type="file" id="avatar" name="avatar" accept="image/jpeg, image/webp">
-                <img src="{{ asset(employee.avatar ? '/uploads/' ~ employee.avatar : '/default.jpeg') }}" alt="image">
+                <img src={% if app.request.get('_route') == 'add_employee_page' %}'/default.jpeg'{% else %}{{ employee is defined ? '/uploads/' ~ employee.avatar : '/default.jpeg' }}
+                    {% endif %}alt="image">
             </div>
             <input
                 class="btn primary marginT25"

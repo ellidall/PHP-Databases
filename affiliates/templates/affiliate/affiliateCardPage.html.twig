@@ -24,7 +24,6 @@
             autocomplete="off"
         >
             <input type="hidden" name="id" value="{{ app.request.get('id') }}">
-            <input type="hidden" name="employeeCount" value="{{ affiliate is defined ? affiliate.employeeCount : 0 }}">
             <div class="fields">
                 <div class="field">
                     <label class="commonText fieldName" for="city">{{ 'Город: ' }}</label>

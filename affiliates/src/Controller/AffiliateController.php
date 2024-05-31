@@ -3,11 +3,12 @@ declare(strict_types = 1);
 
 namespace App\Controller;
 
-use App\Common\ConnectionProvider;
+use App\Common\Database\ConnectionProvider;
 use App\Database\AffiliateTable;
 use App\Database\EmployeeTable;
 use App\Model\Affiliate;
 use Exception;
+use InvalidArgumentException;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -15,22 +16,22 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class AffiliateController extends AbstractController
 {
-    private AffiliateTable $affiliateRepository;
-    private EmployeeTable $employeeRepository;
+    private AffiliateTable $affiliateTable;
+    private EmployeeTable $employeeTable;
 
     public function __construct ()
     {
         $connectionProvider = new ConnectionProvider();
         $connection = $connectionProvider->getConnection();
-        $this->employeeRepository = new EmployeeTable($connection);
-        $this->affiliateRepository = new AffiliateTable($connection);
+        $this->employeeTable = new EmployeeTable($connection);
+        $this->affiliateTable = new AffiliateTable($connection);
     }
 
     public function getAffiliateListPage(): Response
     {
         try
         {
-            $affiliates = $this->getAffiliateList();
+            $affiliates = $this->affiliateTable->listAll();
             return $this->render('affiliate/affiliateListPage.html.twig', [
                 'affiliates' => $affiliates,
             ]);
@@ -43,27 +44,26 @@ class AffiliateController extends AbstractController
 
     public function getAffiliateCardPage(int $id): Response
     {
-//        try
-//        {
-            $affiliate = $this->affiliateRepository->findById($id);
+        try
+        {
+            $affiliate = $this->affiliateTable->findById($id);
 
             if (!$affiliate) {
                 throw new NotFoundHttpException('Affiliate with ID = ' . $id . ' not found');
             }
-            $emp = $this->employeeRepository->findByAffiliateId($id);
             return $this->render('affiliate/affiliateCardPage.html.twig', [
                 'affiliate' => $affiliate,
-                'employees' => $this->employeeRepository->findByAffiliateId($id),
+                'employees' => $this->employeeTable->findByAffiliateId($id),
             ]);
-//        }
-//        catch (NotFoundHttpException $e)
-//        {
-//            return new Response('An error occurred: ' . $e->getMessage(), Response::HTTP_NOT_FOUND);
-//        }
-//        catch (Exception $e)
-//        {
-//            return new Response('An error occurred: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
-//        }
+        }
+        catch (NotFoundHttpException $e)
+        {
+            return new Response('An error occurred: ' . $e->getMessage(), Response::HTTP_NOT_FOUND);
+        }
+        catch (Exception $e)
+        {
+            return new Response('An error occurred: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
     }
 
     public function getAddAffiliatePage(): Response
@@ -86,10 +86,10 @@ class AffiliateController extends AbstractController
                 id: null,
                 city: $request->request->get('city'),
                 address: $request->request->get('address'),
-                employeeCount: (int)($request->request->get('employeeCount') ?: 0),
+                employeeCount: 0,
             );
 
-            $newAffiliateId = $this->affiliateRepository->create($affiliate);
+            $newAffiliateId = $this->affiliateTable->insert($affiliate);
             $affiliate->setId($newAffiliateId);
 
             return $this->redirectToRoute('affiliate_card_page', ['id' => $newAffiliateId]);
@@ -105,14 +105,17 @@ class AffiliateController extends AbstractController
         try
         {
             $id = (int)$request->request->get('id');
-            $affiliate = new Affiliate(
-                id: $id,
-                city: $request->request->get('city'),
-                address: $request->request->get('address'),
-                employeeCount: count($this->employeeRepository->findByAffiliateId($id)),
-            );
+            $city = $request->request->get('city');
+            $address = $request->request->get('address');
+            $employeeCount = count($this->employeeTable->findByAffiliateId($id) ?? 0);
 
-            $this->affiliateRepository->update($affiliate);
+            $affiliate = $this->affiliateTable->findById($id);
+
+            $affiliate->setCity($city);
+            $affiliate->setAddress($address);
+            $affiliate->setEmployeeCount($employeeCount);
+
+            $this->affiliateTable->update($affiliate);
 
             return $this->redirectToRoute('affiliate_card_page', ['id' => $id]);
         }
@@ -127,14 +130,14 @@ class AffiliateController extends AbstractController
         try
         {
             $id = (int)$request->request->get('id');
-            $affiliate = $this->affiliateRepository->findById($id);
-            $employees = $this->employeeRepository->findByAffiliateId($id);
+            $affiliate = $this->affiliateTable->findById($id);
+            $employees = $this->employeeTable->findByAffiliateId($id);
             foreach ($employees as $employee) {
-                $this->employeeRepository->delete($employee);
+                $this->employeeTable->delete($employee);
             }
-            $this->affiliateRepository->delete($affiliate);
+            $this->affiliateTable->delete($affiliate);
 
-            $affiliates = $this->affiliateRepository->listAll();
+            $affiliates = $this->affiliateTable->listAll();
             return $this->render('affiliate/affiliateListPage.html.twig', [
                 'affiliates' => $affiliates,
             ]);
@@ -143,13 +146,5 @@ class AffiliateController extends AbstractController
         {
             return new Response('An error occurred: ' . $e->getMessage(), Response::HTTP_INTERNAL_SERVER_ERROR);
         }
-    }
-
-    /**
-     * @return Affiliate[]
-     */
-    private function getAffiliateList(): array
-    {
-        return $this->affiliateRepository->listAll();
     }
 }
